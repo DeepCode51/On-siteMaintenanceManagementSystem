@@ -1,0 +1,615 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.javaweb.dao.OrdersMapper">
+	<resultMap id="BaseResultMap" type="com.javaweb.entity.Orders">
+		<id column="id" jdbcType="INTEGER" property="id" />
+		<result column="numbering" jdbcType="CHAR" property="numbering" />
+		<result column="customerid" jdbcType="INTEGER" property="customerid" />
+		<result column="vehicleid" jdbcType="INTEGER" property="vehicleid" />
+		<result column="miles" jdbcType="DOUBLE" property="miles" />
+		<result column="ifused" jdbcType="SMALLINT" property="ifused" />
+		<result column="ifcheckspare" jdbcType="SMALLINT" property="ifcheckspare" />
+		<result column="ifclean" jdbcType="SMALLINT" property="ifclean" />
+		<result column="esdeliverytime" jdbcType="TIMESTAMP" property="esdeliverytime" />
+		<result column="warrcontent" jdbcType="VARCHAR" property="warrcontent" />
+		<result column="caritems" jdbcType="VARCHAR" property="caritems" />
+		<result column="valuableobj" jdbcType="VARCHAR" property="valuableobj" />
+		<result column="hassettled" jdbcType="SMALLINT" property="hassettled" />
+		<result column="hascompleted" jdbcType="SMALLINT" property="hascompleted" />
+		<result column="completedate" jdbcType="SMALLINT" property="completedate" />
+		<result column="settlecompdate" jdbcType="TIMESTAMP" property="settlecompdate" />
+		<result column="bustatusid" jdbcType="INTEGER" property="bustatusid" />
+		<result column="paystatusid" jdbcType="INTEGER" property="paystatusid" />
+	</resultMap>
+	<resultMap extends="BaseResultMap" id="ResultMapWithBLOBs"
+		type="com.javaweb.entity.Orders">
+		<result column="ownerdescribtion" jdbcType="LONGVARCHAR"
+			property="ownerdescribtion" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, numbering, customerid, vehicleid, miles, ifused, ifcheckspare,
+		ifclean, esdeliverytime,
+		warrcontent, caritems, valuableobj, hassettled, hascompleted, completedate,
+		settlecompdate,
+		bustatusid, paystatusid
+	</sql>
+	<sql id="Blob_Column_List">
+		ownerdescribtion
+	</sql>
+	<select id="selectByPrimaryKey" parameterType="java.lang.Integer"
+		resultMap="ResultMapWithBLOBs">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from orders
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from orders
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.javaweb.entity.Orders"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into orders (id, numbering, customerid,
+		vehicleid, miles, ifused,
+		ifcheckspare, ifclean, esdeliverytime,
+		warrcontent, caritems, valuableobj,
+		hassettled, hascompleted, completedate,
+		settlecompdate, bustatusid, paystatusid,
+		ownerdescribtion)
+		values (#{id,jdbcType=INTEGER}, #{numbering,jdbcType=CHAR},
+		#{customerid,jdbcType=INTEGER},
+		#{vehicleid,jdbcType=INTEGER}, #{miles,jdbcType=DOUBLE}, #{ifused,jdbcType=SMALLINT},
+		#{ifcheckspare,jdbcType=SMALLINT}, #{ifclean,jdbcType=SMALLINT},
+		#{esdeliverytime,jdbcType=TIMESTAMP},
+		#{warrcontent,jdbcType=VARCHAR}, #{caritems,jdbcType=VARCHAR}, #{valuableobj,jdbcType=VARCHAR},
+		#{hassettled,jdbcType=SMALLINT}, #{hascompleted,jdbcType=SMALLINT},
+		#{completedate,jdbcType=SMALLINT},
+		#{settlecompdate,jdbcType=TIMESTAMP}, #{bustatusid,jdbcType=INTEGER},
+		#{paystatusid,jdbcType=INTEGER},
+		#{ownerdescribtion,jdbcType=LONGVARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.javaweb.entity.Orders">
+		insert into orders
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="numbering != null">
+				numbering,
+			</if>
+			<if test="customerid != null">
+				customerid,
+			</if>
+			<if test="vehicleid != null">
+				vehicleid,
+			</if>
+			<if test="miles != null">
+				miles,
+			</if>
+			<if test="ifused != null">
+				ifused,
+			</if>
+			<if test="ifcheckspare != null">
+				ifcheckspare,
+			</if>
+			<if test="ifclean != null">
+				ifclean,
+			</if>
+			<if test="esdeliverytime != null">
+				esdeliverytime,
+			</if>
+			<if test="warrcontent != null">
+				warrcontent,
+			</if>
+			<if test="caritems != null">
+				caritems,
+			</if>
+			<if test="valuableobj != null">
+				valuableobj,
+			</if>
+			<if test="hassettled != null">
+				hassettled,
+			</if>
+			<if test="hascompleted != null">
+				hascompleted,
+			</if>
+			<if test="completedate != null">
+				completedate,
+			</if>
+			<if test="settlecompdate != null">
+				settlecompdate,
+			</if>
+			<if test="bustatusid != null">
+				bustatusid,
+			</if>
+			<if test="paystatusid != null">
+				paystatusid,
+			</if>
+			<if test="ownerdescribtion != null">
+				ownerdescribtion,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="numbering != null">
+				#{numbering,jdbcType=CHAR},
+			</if>
+			<if test="customerid != null">
+				#{customerid,jdbcType=INTEGER},
+			</if>
+			<if test="vehicleid != null">
+				#{vehicleid,jdbcType=INTEGER},
+			</if>
+			<if test="miles != null">
+				#{miles,jdbcType=DOUBLE},
+			</if>
+			<if test="ifused != null">
+				#{ifused,jdbcType=SMALLINT},
+			</if>
+			<if test="ifcheckspare != null">
+				#{ifcheckspare,jdbcType=SMALLINT},
+			</if>
+			<if test="ifclean != null">
+				#{ifclean,jdbcType=SMALLINT},
+			</if>
+			<if test="esdeliverytime != null">
+				#{esdeliverytime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="warrcontent != null">
+				#{warrcontent,jdbcType=VARCHAR},
+			</if>
+			<if test="caritems != null">
+				#{caritems,jdbcType=VARCHAR},
+			</if>
+			<if test="valuableobj != null">
+				#{valuableobj,jdbcType=VARCHAR},
+			</if>
+			<if test="hassettled != null">
+				#{hassettled,jdbcType=SMALLINT},
+			</if>
+			<if test="hascompleted != null">
+				#{hascompleted,jdbcType=SMALLINT},
+			</if>
+			<if test="completedate != null">
+				#{completedate,jdbcType=SMALLINT},
+			</if>
+			<if test="settlecompdate != null">
+				#{settlecompdate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="bustatusid != null">
+				#{bustatusid,jdbcType=INTEGER},
+			</if>
+			<if test="paystatusid != null">
+				#{paystatusid,jdbcType=INTEGER},
+			</if>
+			<if test="ownerdescribtion != null">
+				#{ownerdescribtion,jdbcType=LONGVARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.javaweb.entity.Orders">
+		update orders
+		<set>
+			<if test="numbering != null">
+				numbering = #{numbering,jdbcType=CHAR},
+			</if>
+			<if test="customerid != null">
+				customerid = #{customerid,jdbcType=INTEGER},
+			</if>
+			<if test="vehicleid != null">
+				vehicleid = #{vehicleid,jdbcType=INTEGER},
+			</if>
+			<if test="miles != null">
+				miles = #{miles,jdbcType=DOUBLE},
+			</if>
+			<if test="ifused != null">
+				ifused = #{ifused,jdbcType=SMALLINT},
+			</if>
+			<if test="ifcheckspare != null">
+				ifcheckspare = #{ifcheckspare,jdbcType=SMALLINT},
+			</if>
+			<if test="ifclean != null">
+				ifclean = #{ifclean,jdbcType=SMALLINT},
+			</if>
+			<if test="esdeliverytime != null">
+				esdeliverytime = #{esdeliverytime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="warrcontent != null">
+				warrcontent = #{warrcontent,jdbcType=VARCHAR},
+			</if>
+			<if test="caritems != null">
+				caritems = #{caritems,jdbcType=VARCHAR},
+			</if>
+			<if test="valuableobj != null">
+				valuableobj = #{valuableobj,jdbcType=VARCHAR},
+			</if>
+			<if test="hassettled != null">
+				hassettled = #{hassettled,jdbcType=SMALLINT},
+			</if>
+			<if test="hascompleted != null">
+				hascompleted = #{hascompleted,jdbcType=SMALLINT},
+			</if>
+			<if test="completedate != null">
+				completedate = #{completedate,jdbcType=SMALLINT},
+			</if>
+			<if test="settlecompdate != null">
+				settlecompdate = #{settlecompdate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="bustatusid != null">
+				bustatusid = #{bustatusid,jdbcType=INTEGER},
+			</if>
+			<if test="paystatusid != null">
+				paystatusid = #{paystatusid,jdbcType=INTEGER},
+			</if>
+			<if test="ownerdescribtion != null">
+				ownerdescribtion = #{ownerdescribtion,jdbcType=LONGVARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKeyWithBLOBs" parameterType="com.javaweb.entity.Orders">
+		update orders
+		set numbering = #{numbering,jdbcType=CHAR},
+		customerid = #{customerid,jdbcType=INTEGER},
+		vehicleid = #{vehicleid,jdbcType=INTEGER},
+		miles = #{miles,jdbcType=DOUBLE},
+		ifused = #{ifused,jdbcType=SMALLINT},
+		ifcheckspare = #{ifcheckspare,jdbcType=SMALLINT},
+		ifclean = #{ifclean,jdbcType=SMALLINT},
+		esdeliverytime = #{esdeliverytime,jdbcType=TIMESTAMP},
+		warrcontent = #{warrcontent,jdbcType=VARCHAR},
+		caritems = #{caritems,jdbcType=VARCHAR},
+		valuableobj = #{valuableobj,jdbcType=VARCHAR},
+		hassettled = #{hassettled,jdbcType=SMALLINT},
+		hascompleted = #{hascompleted,jdbcType=SMALLINT},
+		completedate = #{completedate,jdbcType=SMALLINT},
+		settlecompdate = #{settlecompdate,jdbcType=TIMESTAMP},
+		bustatusid = #{bustatusid,jdbcType=INTEGER},
+		paystatusid = #{paystatusid,jdbcType=INTEGER},
+		ownerdescribtion = #{ownerdescribtion,jdbcType=LONGVARCHAR}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.javaweb.entity.Orders">
+		update orders
+		set numbering = #{numbering,jdbcType=CHAR},
+		customerid = #{customerid,jdbcType=INTEGER},
+		vehicleid = #{vehicleid,jdbcType=INTEGER},
+		miles = #{miles,jdbcType=DOUBLE},
+		ifused = #{ifused,jdbcType=SMALLINT},
+		ifcheckspare = #{ifcheckspare,jdbcType=SMALLINT},
+		ifclean = #{ifclean,jdbcType=SMALLINT},
+		esdeliverytime = #{esdeliverytime,jdbcType=TIMESTAMP},
+		warrcontent = #{warrcontent,jdbcType=VARCHAR},
+		caritems = #{caritems,jdbcType=VARCHAR},
+		valuableobj = #{valuableobj,jdbcType=VARCHAR},
+		hassettled = #{hassettled,jdbcType=SMALLINT},
+		hascompleted = #{hascompleted,jdbcType=SMALLINT},
+		completedate = #{completedate,jdbcType=SMALLINT},
+		settlecompdate = #{settlecompdate,jdbcType=TIMESTAMP},
+		bustatusid = #{bustatusid,jdbcType=INTEGER},
+		paystatusid = #{paystatusid,jdbcType=INTEGER}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+
+	<!-- 订单维修查询 -->
+	<select id="selectOrdersMaint" resultType="com.javaweb.views.OrderMaintence">
+		SELECT DISTINCT orders.id as ordersid,
+		personallocate.taskcategory, 
+		personallocate.userinfoid,
+		orders.customerid as customerid,
+		orders.vehicleid as vehicleid,
+		personallocate.id as personallocateid,
+		customer.numbering as customername,
+		customer.contactinfo,
+		orders.miles,
+		vehicle.vehflag,
+		vehicle.inspectiondate,
+		customer.contactadd,
+		orders.ifused,
+		orders.ifclean,
+		orders.ifcheckspare,
+		orders.warrcontent,
+		orders.caritems,
+		orders.valuableobj,
+		orders.ownerdescribtion,
+		vehicle.platenum,
+		orders.bustatusid,
+		bustatus.statename,
+		personallocate.allocatetime,
+		vehicle.vehname,
+		vehicle.carmodel,
+		orders.esdeliverytime
+		from orders left join personallocate on(personallocate.ordersid=orders.id)
+		left join customer on (orders.customerid=customer.id)
+		left join vehicle on (orders.vehicleid = vehicle.id)
+		left join bustatus on (orders.bustatusid = bustatus.id) 
+		<where>
+			<if test="userinfoid!=null and userinfoid!=''">
+				 userinfoid = #{userinfoid}
+			</if>
+			<if test="keyworld!=null and keyworld!=''">
+				and (customer.numbering like concat('%',#{keyworld},'%')
+				or contactinfo like concat('%',#{keyworld},'%')
+				or platenum like concat('%',#{keyworld},'%'))
+			</if>
+			<if test="starttime!=null and starttime!='' and endtime!=null and endtime!=''">
+				and allocatetime between concat(#{starttime},' 00:00:00') and concat(#{endtime},' 23:59:59')
+			</if>
+			<if test="category!=null and category!=''">
+				and taskcategory = #{category}
+			</if>
+			<if test="orderstatus!=null and orderstatus!=''"> 
+				<choose>
+					<when test='orderstatus=="2"'>
+						and bustatusid != '1'
+					</when>
+					<otherwise>
+						and bustatusid = #{orderstatus}
+					</otherwise>
+				</choose> 
+			</if>
+		</where>
+		<if test="sort!=null and sort!='' and order!=null and order!=''">
+			order by ${sort} ${order}
+		</if>
+	</select>
+	
+	<!-- 订单结算查询 -->
+	<select id="selctMyPayOrders" resultType="com.javaweb.views.PayViews">
+		SELECT
+			o.id AS ordersid,
+			o.numbering,
+			o.customerid,
+			c.numbering AS customername,
+			c.contactinfo,
+			v.id AS vehicleid,
+			v.vehname,
+			v.carmodel,
+			o.warrcontent,
+			b.id AS bustatusid,
+			b.statename AS busstatus,
+			p.id AS paystatusid,
+			p.statusname AS paystatus,
+			o.esdeliverytime,
+			q.ptotal,
+			m.mtotal,
+			(q.ptotal+m.mtotal) as totalcost
+		FROM
+			orders AS o
+		JOIN customer AS c ON (o.customerid = c.id)
+		JOIN vehicle AS v ON (o.vehicleid = v.id)
+		JOIN bustatus AS b ON (o.bustatusid = b.id)
+		JOIN paystatus AS p ON (o.paystatusid = p.id)
+		JOIN (
+			SELECT
+				_p.ordersid,
+				SUM(_p.ptotal) AS ptotal
+			FROM
+				(
+					SELECT
+						u.ordersid,
+						(
+		
+							IF (
+								u.receivednum = '0',
+								'0',
+								u.receivednum * p.salesprice
+							)
+						) AS ptotal
+					FROM
+						partused AS u
+					JOIN part AS p ON (u.partid = p.id) 
+				) AS _p 
+				group by _p.ordersid
+		) AS q ON (q.ordersid = o.id)
+		JOIN (
+			SELECT
+				_m.ordersid,
+				sum(_m.totalcost) AS mtotal
+			FROM
+				(
+					SELECT
+						m.ordersid,
+						m.spenttime * i.itemprice AS totalcost
+					FROM
+						mainprojreg AS m
+					JOIN mainitem AS i ON (m.mainitemid = i.id) 
+				) AS _m 
+				group by _m.ordersid
+		) AS m ON (m.ordersid = o.id)
+		<where>
+			<!-- 关键字 -->
+			<if test="keyworld!=null and keyworld!=''">
+				(
+					c.numbering  like concat('%',#{keyworld},'%')
+					or 
+					c.contactinfo like concat('%',#{keyworld},'%') 
+				)
+			</if>			
+			<!-- 开始时间和结束时间 -->
+			<if test="starttime!=null and starttime!='' and endtime !=null and endtime!=''">
+				and o.esdeliverytime between concat(#{starttime},' 00:00:00') 
+					and
+					concat(#{endtime},' 23:59:59')
+			</if>
+			<!-- 状态编号 -->
+			<choose>
+				<when test="bustatusid!=null and bustatusid!=''">
+					and o.bustatusid=#{bustatusid}
+				</when>
+				<otherwise>
+					and (o.bustatusid='3' or o.bustatusid='4')
+				</otherwise>
+			</choose> 
+			<!-- 支付状态 -->
+			<if test="paystatusid!=null and paystatusid!=''">
+				and p.id=#{paystatusid}
+			</if>
+			<!-- 订单的编号 -->
+			<if test="ordersid!=null and ordersid!=''">
+				and o.id=#{ordersid}
+			</if>
+		</where>
+		ORDER BY
+			o.id ASC
+	</select>
+	
+	<!-- 查询用料情况 -->
+	<select id="selectAllYLList" resultType="com.javaweb.views.PartUsedView">
+		SELECT
+			u.ordersid,
+			p.partname,
+			u.receivednum,
+			p.salesprice,
+			(
+		
+				IF (
+					u.receivednum = '0',
+					'0',
+					u.receivednum * p.salesprice
+				)
+			) AS ptotal
+		FROM
+			partused AS u
+		JOIN part AS p ON (u.partid = p.id)
+		<where>
+			<if test="ordersid!=null and ordersid!=''">
+				and u.ordersid = #{ordersid} 
+			</if>
+		</where> 
+	</select>
+	
+	<!-- 查询维修情况 -->
+	<select id="selectAllWXList" resultType="com.javaweb.views.MainitemUsedView">
+		SELECT
+			m.ordersid,
+			m.mainitemid,
+			i.projName,
+			i.itemprice,
+			m.spenttime,
+			m.spenttime * i.itemprice AS totalcost
+		FROM
+			mainprojreg AS m
+		JOIN mainitem AS i ON (m.mainitemid = i.id)
+		<where>
+			<if test="ordersid!=null and ordersid!=''">
+				and m.ordersid=#{ordersid}
+			</if>
+		</where>
+	</select>
+	
+	<select id="selectSettledOrders" resultType="com.javaweb.views.SettleOrderView">
+		select 
+			o.id as ordersid,
+			o.customerid,
+			c.numbering,
+			c.contactinfo,
+			v.id as vehicleid,
+			v.platenum,
+			o.warrcontent,
+			b.settlementdate,
+			b.totalamount
+		from orders as o
+		join customer as c on (o.customerid=c.id)
+		join vehicle as v on (o.vehicleid = v.id)
+		join balancesheet as b on(o.id = b.ordersid)
+		<where>
+			<if test="starttime!=null and starttime!='' and endtime!=null and endtime!=''">
+				and b.settlementdate between concat(#{starttime},' 00:00:00') 
+				and concat(#{endtime},' 23:59:59')				
+			</if>
+		</where>
+	</select>	
+	
+	
+	<!-- 接单量统计 -->
+	<select id="jiedantongji" resultType="java.util.HashMap">
+		select   
+			sum(case month(m.allocatetime) when '1' then 1 else 0 end) as '1',  
+			sum(case month(m.allocatetime) when '2' then 1 else 0 end) as '2',  
+			sum(case month(m.allocatetime) when '3' then 1 else 0 end) as '3',  
+			sum(case month(m.allocatetime) when '4' then 1 else 0 end) as '4',  
+			sum(case month(m.allocatetime) when '5' then 1 else 0 end) as '5',  
+			sum(case month(m.allocatetime) when '6' then 1 else 0 end) as '6',  
+			sum(case month(m.allocatetime) when '7' then 1 else 0 end) as '7',  
+			sum(case month(m.allocatetime) when '8' then 1 else 0 end) as '8',  
+			sum(case month(m.allocatetime) when '9' then 1 else 0 end) as '9',  
+			sum(case month(m.allocatetime) when '10' then 1 else 0 end) as '10',  
+			sum(case month(m.allocatetime) when '11' then 1 else 0 end) as '11',  
+			sum(case month(m.allocatetime) when '12' then 1 else 0 end) as '12' 
+		from (
+			select DISTINCT o.id,p.allocatetime
+			from orders as o 
+			join personallocate as p on(o.id = p.ordersid)
+		) as m
+		where year(m.allocatetime)=#{year};  
+	</select>
+	
+	<!-- 销售额统计 -->
+	<select id="xiaoshouetongji" resultType="java.util.HashMap">
+		select   
+			sum(case month(m.settlementdate) when '1' then m.totalamount else 0 end) as '1',  
+			sum(case month(m.settlementdate) when '2' then m.totalamount else 0 end) as '2',  
+			sum(case month(m.settlementdate) when '3' then m.totalamount else 0 end) as '3',  
+			sum(case month(m.settlementdate) when '4' then m.totalamount else 0 end) as '4',  
+			sum(case month(m.settlementdate) when '5' then m.totalamount else 0 end) as '5',  
+			sum(case month(m.settlementdate) when '6' then m.totalamount else 0 end) as '6',  
+			sum(case month(m.settlementdate) when '7' then m.totalamount else 0 end) as '7',  
+			sum(case month(m.settlementdate) when '8' then m.totalamount else 0 end) as '8',  
+			sum(case month(m.settlementdate) when '9' then m.totalamount else 0 end) as '9',  
+			sum(case month(m.settlementdate) when '10' then m.totalamount else 0 end) as '10',  
+			sum(case month(m.settlementdate) when '11' then m.totalamount else 0 end) as '11',  
+			sum(case month(m.settlementdate) when '12' then m.totalamount else 0 end) as '12'  
+		from (
+			select 
+				o.id as ordersid,
+				b.totalamount,
+				b.settlementdate
+			from orders as o
+			join balancesheet as b on(o.id=b.ordersid)
+		) as m
+		where year(m.settlementdate)=#{year}
+	</select>
+	
+	<!-- 查询采购金额 -->
+	<select id="caigoujinetongji" resultType="java.util.HashMap">
+		select   
+			sum(case month(m.purtime) when '1' then m.totalpurchase else 0 end) as '1',  
+			sum(case month(m.purtime) when '2' then m.totalpurchase else 0 end) as '2',  
+			sum(case month(m.purtime) when '3' then m.totalpurchase else 0 end) as '3',  
+			sum(case month(m.purtime) when '4' then m.totalpurchase else 0 end) as '4',  
+			sum(case month(m.purtime) when '5' then m.totalpurchase else 0 end) as '5',  
+			sum(case month(m.purtime) when '6' then m.totalpurchase else 0 end) as '6',  
+			sum(case month(m.purtime) when '7' then m.totalpurchase else 0 end) as '7',  
+			sum(case month(m.purtime) when '8' then m.totalpurchase else 0 end) as '8',  
+			sum(case month(m.purtime) when '9' then m.totalpurchase else 0 end) as '9',  
+			sum(case month(m.purtime) when '10' then m.totalpurchase else 0 end) as '10',  
+			sum(case month(m.purtime) when '11' then m.totalpurchase else 0 end) as '11',  
+			sum(case month(m.purtime) when '12' then m.totalpurchase else 0 end) as '12'  
+		from (
+			SELECT
+			p.id,
+			p.partcategoryname as purtime,
+			p.totalpurchase
+			from partproc as p
+			where p.purchstatus='1'
+		) as m
+	where year(m.purtime)=#{year}
+	</select>
+	
+	<!-- 收入采购占比 -->
+	<select id="zhanbitongji" resultType="java.lang.String">
+		select sum(b.totalamount) as total
+		from orders as o
+		join balancesheet as b on (o.id = b.ordersid)
+		where YEAR(b.settlementdate)=#{year}
+		UNION
+		select SUM(partproc.totalpurchase) as total
+		from partproc 
+		where YEAR(partproc.partcategoryname)=#{year}
+	</select>
+</mapper>

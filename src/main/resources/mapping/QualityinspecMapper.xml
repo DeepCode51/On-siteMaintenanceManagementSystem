@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.javaweb.dao.QualityinspecMapper">
+  <resultMap id="BaseResultMap" type="com.javaweb.entity.Qualityinspec">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="mainprojregid" jdbcType="INTEGER" property="mainprojregid" />
+    <result column="inspectperson" jdbcType="CHAR" property="inspectperson" />
+    <result column="jobnum" jdbcType="CHAR" property="jobnum" />
+    <result column="inspecttime" jdbcType="TIMESTAMP" property="inspecttime" />
+    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, mainprojregid, inspectperson, jobnum, inspecttime, remarks
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from qualityinspec
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from qualityinspec
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.javaweb.entity.Qualityinspec">
+    insert into qualityinspec (id, mainprojregid, inspectperson, 
+      jobnum, inspecttime, remarks
+      )
+    values (#{id,jdbcType=INTEGER}, #{mainprojregid,jdbcType=INTEGER}, #{inspectperson,jdbcType=CHAR}, 
+      #{jobnum,jdbcType=CHAR}, #{inspecttime,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.javaweb.entity.Qualityinspec">
+    insert into qualityinspec
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="mainprojregid != null">
+        mainprojregid,
+      </if>
+      <if test="inspectperson != null">
+        inspectperson,
+      </if>
+      <if test="jobnum != null">
+        jobnum,
+      </if>
+      <if test="inspecttime != null">
+        inspecttime,
+      </if>
+      <if test="remarks != null">
+        remarks,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="mainprojregid != null">
+        #{mainprojregid,jdbcType=INTEGER},
+      </if>
+      <if test="inspectperson != null">
+        #{inspectperson,jdbcType=CHAR},
+      </if>
+      <if test="jobnum != null">
+        #{jobnum,jdbcType=CHAR},
+      </if>
+      <if test="inspecttime != null">
+        #{inspecttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null">
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.javaweb.entity.Qualityinspec">
+    update qualityinspec
+    <set>
+      <if test="mainprojregid != null">
+        mainprojregid = #{mainprojregid,jdbcType=INTEGER},
+      </if>
+      <if test="inspectperson != null">
+        inspectperson = #{inspectperson,jdbcType=CHAR},
+      </if>
+      <if test="jobnum != null">
+        jobnum = #{jobnum,jdbcType=CHAR},
+      </if>
+      <if test="inspecttime != null">
+        inspecttime = #{inspecttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null">
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.javaweb.entity.Qualityinspec">
+    update qualityinspec
+    set mainprojregid = #{mainprojregid,jdbcType=INTEGER},
+      inspectperson = #{inspectperson,jdbcType=CHAR},
+      jobnum = #{jobnum,jdbcType=CHAR},
+      inspecttime = #{inspecttime,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <!-- 查询待质检的订单 -->
+  <select id="selectZhiJian" resultType="com.javaweb.views.QualityView">
+	select 
+		o.id as ordersid,
+		o.numbering as ordernumbering,
+		o.customerid,
+		o.vehicleid,
+		o.warrcontent,
+		c.numbering,
+		c.contactinfo,
+		v.platenum,
+		v.vehname,
+		v.carmodel,
+		a.allocatetime,
+		a.userinfoid,
+		o.bustatusid,
+		o.esdeliverytime, 
+		s.statename
+	from orders as o
+		join personallocate as a on(o.id = a.ordersid)
+		join customer as c on(o.customerid = c.id)
+		join vehicle as v on (o.vehicleid = v.id)
+		join bustatus as s on (o.bustatusid = s.id)
+	<where>
+		a.taskcategory = 'zj'
+		<!-- 分配给谁 -->
+		<if test="userinfoid!=null and userinfoid!=''">
+			and a.userinfoid = #{userinfoid}
+		</if>
+		<!-- 模糊查询 -->
+		<if test="keyworld!=null and keyworld!=''">
+			and (c.numbering like concat('%',#{keyworld},'%')
+				or c.contactinfo like concat('%',#{keyworld},'%')
+				or v.platenum like concat('%',#{keyworld},'%')
+			)
+		</if> 
+		<!-- 开始事件和结束事件 -->
+		<if test="starttime!=null and starttime!='' and endtime!=null and endtime!=''">
+			and a.allocatetime between concat(#{starttime},' 00:00:00')
+			    and concat(#{endtime},' 23:59:59')
+		</if>
+		<!-- 业务的状态的编号 -->
+		<choose>
+			<when test="bustatusid!=null and bustatusid!=''">
+				and o.bustatusid=#{bustatusid}
+			</when>
+			<otherwise>
+				and (o.bustatusid='2' or o.bustatusid='3')
+			</otherwise>
+		</choose> 
+	</where> 
+  </select>
+  
+  
+</mapper>

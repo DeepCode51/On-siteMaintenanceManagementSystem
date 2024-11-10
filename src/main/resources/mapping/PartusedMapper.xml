@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.javaweb.dao.PartusedMapper">
+	<resultMap id="BaseResultMap" type="com.javaweb.entity.Partused">
+		<id column="id" jdbcType="INTEGER" property="id" />
+		<result column="ordersid" jdbcType="INTEGER" property="ordersid" />
+		<result column="partid" jdbcType="INTEGER" property="partid" />
+		<result column="useamount" jdbcType="DOUBLE" property="useamount" />
+		<result column="applicant" jdbcType="CHAR" property="applicant" />
+		<result column="jobnumber" jdbcType="CHAR" property="jobnumber" />
+		<result column="concatinfo" jdbcType="CHAR" property="concatinfo" />
+		<result column="applicattime" jdbcType="TIMESTAMP" property="applicattime" />
+		<result column="registedspecnum" jdbcType="DOUBLE" property="registedspecnum" />
+		<result column="noreceivingnum" jdbcType="DOUBLE" property="noreceivingnum" />
+		<result column="receivednum" jdbcType="DOUBLE" property="receivednum" />
+		<result column="receivestatus" jdbcType="CHAR" property="receivestatus" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, ordersid, partid, useamount, applicant, jobnumber,
+		concatinfo,
+		applicattime,
+		registedspecnum, noreceivingnum, receivednum,
+		receivestatus
+	</sql>
+	<select id="selectByPrimaryKey" parameterType="java.lang.Integer"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from partused
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from
+		partused
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.javaweb.entity.Partused">
+		insert into partused (id,
+		ordersid, partid,
+		useamount, applicant, jobnumber,
+		concatinfo,
+		applicattime, registedspecnum,
+		noreceivingnum, receivednum,
+		receivestatus
+		)
+		values (#{id,jdbcType=INTEGER},
+		#{ordersid,jdbcType=INTEGER},
+		#{partid,jdbcType=INTEGER},
+		#{useamount,jdbcType=DOUBLE}, #{applicant,jdbcType=CHAR},
+		#{jobnumber,jdbcType=CHAR},
+		#{concatinfo,jdbcType=CHAR},
+		#{applicattime,jdbcType=TIMESTAMP},
+		#{registedspecnum,jdbcType=DOUBLE},
+		#{noreceivingnum,jdbcType=DOUBLE},
+		#{receivednum,jdbcType=DOUBLE}, #{receivestatus,jdbcType=CHAR}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.javaweb.entity.Partused">
+		insert into partused
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="ordersid != null">
+				ordersid,
+			</if>
+			<if test="partid != null">
+				partid,
+			</if>
+			<if test="useamount != null">
+				useamount,
+			</if>
+			<if test="applicant != null">
+				applicant,
+			</if>
+			<if test="jobnumber != null">
+				jobnumber,
+			</if>
+			<if test="concatinfo != null">
+				concatinfo,
+			</if>
+			<if test="applicattime != null">
+				applicattime,
+			</if>
+			<if test="registedspecnum != null">
+				registedspecnum,
+			</if>
+			<if test="noreceivingnum != null">
+				noreceivingnum,
+			</if>
+			<if test="receivednum != null">
+				receivednum,
+			</if>
+			<if test="receivestatus != null">
+				receivestatus,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="ordersid != null">
+				#{ordersid,jdbcType=INTEGER},
+			</if>
+			<if test="partid != null">
+				#{partid,jdbcType=INTEGER},
+			</if>
+			<if test="useamount != null">
+				#{useamount,jdbcType=DOUBLE},
+			</if>
+			<if test="applicant != null">
+				#{applicant,jdbcType=CHAR},
+			</if>
+			<if test="jobnumber != null">
+				#{jobnumber,jdbcType=CHAR},
+			</if>
+			<if test="concatinfo != null">
+				#{concatinfo,jdbcType=CHAR},
+			</if>
+			<if test="applicattime != null">
+				#{applicattime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="registedspecnum != null">
+				#{registedspecnum,jdbcType=DOUBLE},
+			</if>
+			<if test="noreceivingnum != null">
+				#{noreceivingnum,jdbcType=DOUBLE},
+			</if>
+			<if test="receivednum != null">
+				#{receivednum,jdbcType=DOUBLE},
+			</if>
+			<if test="receivestatus != null">
+				#{receivestatus,jdbcType=CHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.javaweb.entity.Partused">
+		update partused
+		<set>
+			<if test="ordersid != null">
+				ordersid = #{ordersid,jdbcType=INTEGER},
+			</if>
+			<if test="partid != null">
+				partid = #{partid,jdbcType=INTEGER},
+			</if>
+			<if test="useamount != null">
+				useamount = #{useamount,jdbcType=DOUBLE},
+			</if>
+			<if test="applicant != null">
+				applicant = #{applicant,jdbcType=CHAR},
+			</if>
+			<if test="jobnumber != null">
+				jobnumber = #{jobnumber,jdbcType=CHAR},
+			</if>
+			<if test="concatinfo != null">
+				concatinfo = #{concatinfo,jdbcType=CHAR},
+			</if>
+			<if test="applicattime != null">
+				applicattime = #{applicattime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="registedspecnum != null">
+				registedspecnum = #{registedspecnum,jdbcType=DOUBLE},
+			</if>
+			<if test="noreceivingnum != null">
+				noreceivingnum = #{noreceivingnum,jdbcType=DOUBLE},
+			</if>
+			<if test="receivednum != null">
+				receivednum = #{receivednum,jdbcType=DOUBLE},
+			</if>
+			<if test="receivestatus != null">
+				receivestatus = #{receivestatus,jdbcType=CHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.javaweb.entity.Partused">
+		update partused
+		set ordersid = #{ordersid,jdbcType=INTEGER},
+		partid =
+		#{partid,jdbcType=INTEGER},
+		useamount = #{useamount,jdbcType=DOUBLE},
+		applicant = #{applicant,jdbcType=CHAR},
+		jobnumber =
+		#{jobnumber,jdbcType=CHAR},
+		concatinfo = #{concatinfo,jdbcType=CHAR},
+		applicattime = #{applicattime,jdbcType=TIMESTAMP},
+		registedspecnum =
+		#{registedspecnum,jdbcType=DOUBLE},
+		noreceivingnum =
+		#{noreceivingnum,jdbcType=DOUBLE},
+		receivednum =
+		#{receivednum,jdbcType=DOUBLE},
+		receivestatus =
+		#{receivestatus,jdbcType=CHAR}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+
+	<!-- 查询已经登记的零件 -->
+	<select id="selectHasSelectedPart" resultType="com.javaweb.views.PartUsedInfo">
+		select
+		u.id as partusedid,
+		p.id as partid,
+		u.ordersid,
+		p.partnumbering,
+		p.partname,
+		p.specifications,
+		u.registedspecnum,
+		u.receivednum,
+		u.applicattime,
+		u.concatinfo as userinfoid
+		from partused as u
+		join part p
+		on(u.partid=p.id)
+		<where>
+			<if test="ordersid!=null and ordersid!=''">
+				u.ordersid = #{ordersid}
+			</if>
+			<if test="userid!=null and userid!=''">
+				and u.concatinfo = #{userid}
+			</if>
+		</where>
+	</select>
+
+	<!-- 查询维修领料情况 -->
+	<select id="selectPartUsed" resultType="com.javaweb.views.PartPickingView">
+		SELECT DISTINCT
+		u.id AS partusedid,
+		u.registedspecnum,
+		u.receivednum,
+		u.applicant,
+		u.jobnumber,
+		u.concatinfo,
+		u.applicattime,
+		u.receivestatus,
+		o.id AS ordersid,
+		o.numbering AS ordernumbering,
+		o.customerid,
+		o.vehicleid,
+		p.id AS partid,
+		p.partnumbering,
+		p.partname,
+		p.purchaseprice,
+		c.id AS categoryid,
+		c.partcategory,
+		s.id AS supplierid,
+		s.supplierName,
+		w.id AS warehouseid,
+		w.warehouseName,
+		w.warehouseAdd,
+		ps.id AS partstorageid,
+		ps.detaillocation,
+		ps.inventory
+		FROM
+		partused AS u
+		JOIN orders AS o ON (u.ordersid = o.id)
+		JOIN part AS p ON (u.partid =
+		p.id)
+		JOIN partcategory AS c ON (p.partcategoryid = c.id)
+		JOIN supplier
+		AS s ON (s.id = p.supplierid)
+		JOIN partstorage AS ps ON (ps.partid =
+		p.id)
+		JOIN warehouse AS w ON (w.id = ps.warehouseid)
+		<where>
+
+			<!-- 登记维修用料的时间 -->
+			<if
+				test="startTime!=null and startTime!='' and endTime!=null and endTime!=''">
+				u.applicattime BETWEEN concat(#{startTime},' 00:00:00') and concat(#{endTime},'
+				23:59:59')
+			</if>
+			<!-- 登记维修用料的关键字 -->
+			<if test="keyworld!=null and keyworld!=''">
+				and (u.applicant like concat('%',#{keyworld},'%') or u.jobnumber like
+				concat('%',#{keyworld},'%'))
+			</if>
+			<!-- 登记维修用料的查询的类型 -->
+			<if test="searchCategory!=null and searchCategory!=''">
+				<!-- 如若查询已经领取的 -->
+				<if test="searchCategory.toString()=='Y'.toString()">
+ 				    <![CDATA[  
+ 						and u.receivednum=u.registedspecnum
+ 					]]>
+				</if>
+				<!-- 如果查询未曾领取的(已经领取的小于登记使用的) -->
+				<if test="searchCategory.toString()=='W'.toString()">
+ 					<![CDATA[  
+ 						and u.receivednum<u.registedspecnum
+ 					]]>
+				</if>
+			</if>
+		</where>
+		order by u.applicattime desc
+	</select>
+
+	<!-- 查询领取历史表 -->
+	<select id="selectPickedPart" resultType="com.javaweb.views.PickedPartView">
+		select p.id as partid,
+		p.partname,
+		h.reciamount,
+		h.recipients,
+		h.recijobnum,
+		h.contactinfo,
+		h.recitime
+		from accessoryhis as h
+		join partused as u on(h.partusedid = u.id)
+		join part as p on(p.id = u.partid)
+		where u.id = #{partusedid}
+	</select>
+</mapper>
